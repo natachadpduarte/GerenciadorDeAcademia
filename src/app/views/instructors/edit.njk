@@ -1,0 +1,47 @@
+{% extends "layout.njk" %}
+
+{% block content %}
+
+<div class="card">
+
+        <section
+    class="avatar" 
+    style="background: url({{instructor.avatar_url}}) no-repeat center center / cover"></section>
+    <section class="details">
+
+    <form  method="POST" action="/instructors?_method=PUT"> <!--Post melhor para envio de form; Lê query strind do routes-->
+
+        <h3>Editar instrutor</h3>
+
+        {% include 'instructors/fields.njk'%} <!--Reutilizando codigo do fields, sem ter que extender-->
+
+        <input type="hidden" name="id" value={{instructor.id}}>
+
+</form>  
+<form id="form-delete" method="POST" action="/instructors?_method=DELETE">
+    <input type="hidden" name="id" value={{instructor.id}}>
+    <button type="submit">Deletar</button>
+</form>      
+
+    </section>
+
+
+
+
+</div>
+
+
+<script>
+
+    const formDelete = document.querySelector("#form-delete")
+    formDelete.addEventListener("submit", function(event){
+     const confirmation = confirm("Deseja Deletar?")
+     if (!confirmation) {
+       event.preventDefault() //cancela o padrao q é enviar o form, se disser que nao quero cancelar ele para o evento acima de submit
+     }
+    
+    })
+</script>
+
+
+{% endblock content %}
